@@ -1,0 +1,19 @@
+# Ignore the folder where you store uploaded images
+backend/uploads/
+public/uploads/
+
+# Ignore dependencies
+node_modules/
+
+# Ignore build files
+dist/
+build/
+.next/
+
+# Ignore lock files and logs
+package-lock.json
+yarn.lock
+*.log
+
+# Ignore environment variables (security)
+.env
