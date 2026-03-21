@@ -11,13 +11,17 @@ import upload from '../middlewares/Upload.middleware.js'
 
 const router = express.Router();
 
-// Only logged-in admin can access these routes
-router.use(verifyJWT);
-router.use(authorizeRoles("admin"));
-router.post("/create",upload.single('image'), createAchievement);
+// Public routes for viewing achievements
 router.get("/", getAchievements);
 router.get("/:id", getAchievement);
-router.put("/:id", updateAchievement);
+
+// Protected routes for admin only
+router.use(verifyJWT);
+router.use(authorizeRoles("admin"));
+router.post("/create", upload.single('image'), createAchievement);
+
+
+router.put("/:id",upload.single("image"), updateAchievement);
 router.delete("/:id", deleteAchievement);
 
 export default router;

@@ -1,19 +1,19 @@
-export const validate = (schema,data) => {
-  const result = schema.safeParse(data);
-  
-    if (!result.success)
-    {
-      var a = 5
-      console.log(a)
-      console.log(result.error.flatten())
-       return {
-         success: false,
-         errors: error.errors
-       };
-    }
-  return result
-  
- 
-     
 
+
+export const validateMiddleware = (schema) => {
+  return (req, res, next) => {
+    const result = schema.safeParse(req.body);
+  
+
+    if (!result.success) {
+      return res.status(400).json({
+        errors: result.error.format(),
+      });
+    }
+
+    // attach validated data
+    req.validatedData = result.data;
+
+    next();
+  };
 };

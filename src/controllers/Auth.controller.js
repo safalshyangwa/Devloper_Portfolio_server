@@ -4,19 +4,12 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { validate } from "../middlewares/validate.middleware.js";
-import { signupSchema } from "../validators/auth.validator.js";
+
 
 
 
 export const Signup = asyncHandler(async (req, res) => {
-  const data = validate(signupSchema, req.body)
-  console.log(data)
 
-  if (!data.success)
-  {
-    throw  new ApiError(400,"not validated")
-  }
   const { username, email, password } = req.body;
   
 

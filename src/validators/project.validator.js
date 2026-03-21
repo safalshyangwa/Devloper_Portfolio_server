@@ -1,21 +1,22 @@
-// import { z } from "zod";
+import { z } from "zod";
 
-// export const createProjectSchema = z.object({
-//   title: z
-//     .string()
-//     .min(3, "Title must be at least 3 characters")
-//     .max(100),
+export const createProjectSchema = z.object({
+  title: z
+    .string()
+    .min(3, "Title must be at least 3 characters")
+    .max(100),
 
-//   description: z
-//     .string()
-//     .min(10, "Description must be at least 10 characters")
-//     .max(2000),
+  description: z
+    .string()
+    .min(10, "Description must be at least 10 characters")
+    .max(2000),
 
-//   techStack: z.string(),
+    techStack: z.string(),
+  image:z.string().optional()
 
  
 
-// });
+});
 
 /**
  * Update project schema

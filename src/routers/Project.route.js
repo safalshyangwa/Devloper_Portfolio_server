@@ -1,7 +1,6 @@
 import express from "express";
 import upload from "../middlewares/Upload.middleware.js";
-import {validate} from "../middlewares/validate.middleware.js";
-// import { createProjectSchema,updateProjectSchema } from "../validators/project.validator.js";
+
 import {
   createProject,
   getAllProjects,
@@ -11,24 +10,22 @@ import {
 } from "../controllers/Project.controller.js";
 
 import { verifyJWT, authorizeRoles } from "../middlewares/Auth.middleware.js";
+import { validateMiddleware } from "../middlewares/validate.middleware.js";
+import { createBlogSchema } from "../validators/blog.validator.js";
 
 const router = express.Router();
 
-// Only logged-in admin can access these routes
-router.use(verifyJWT);
-router.use(authorizeRoles("admin"));
-router.post('/create',upload.single("image"),createProject)
+// Public routes for viewing projects
 router.get("/", getAllProjects);
-
 router.get("/:id", getProjectById);
 
-router.put(
-  "/:id",
-  upload.single("avatar"),
+// Authorization middleware for write operations
+router.use(verifyJWT);
 
-  updateProject
-);
+router.use(authorizeRoles("admin"));
 
+router.post("/create", upload.single("image"), createProject);
+router.put("/:id", upload.single("image"), updateProject);
 router.delete("/:id", deleteProject);
 
 export default router;

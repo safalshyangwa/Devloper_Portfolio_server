@@ -5,6 +5,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 
 export const verifyJWT = asyncHandler(async (req, res, next) => {
   // 1️⃣ Get token from header
+
   const authHeader = req.header("Authorization");
 
   const token = authHeader?.startsWith("Bearer ")
@@ -22,7 +23,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
   const user = await User.findById(decoded._id).select(
     "-password -refreshToken"
   );
-
+console.log(user)
   if (!user) {
     throw new ApiError(401, "Invalid token: User not found");
   }
@@ -33,6 +34,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
 
   // 4️⃣ Attach user to request
   req.user = user;
+  console.log(req.user)
 
   next();
 });

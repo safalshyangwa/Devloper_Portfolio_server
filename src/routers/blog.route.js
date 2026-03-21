@@ -7,18 +7,22 @@ import {
   deleteBlog
 } from "../controllers/blog.controller.js";
 import { verifyJWT, authorizeRoles } from "../middlewares/Auth.middleware.js";
-import { validate } from "../middlewares/validate.middleware.js";
-import { createBlogSchema,updateBlogSchema } from "../validators/blog.validator.js";
+
+
 import upload from "../middlewares/Upload.middleware.js";
+import { validateMiddleware } from "../middlewares/validate.middleware.js";
 
 const router = express.Router();
-router.use(verifyJWT);
-router.use(authorizeRoles("admin"));
 
-router.post("/create",upload.single('image'),createBlog);
+// Public routes for viewing blogs
 router.get("/", getBlogs);
 router.get("/:id", getBlog);
-router.put("/:id",updateBlog);
+
+// Protected routes for admin only
+router.use(verifyJWT);
+router.use(authorizeRoles("admin"));
+router.post("/create",upload.single('image'),createBlog);
+router.put("/:id",upload.single("image"),updateBlog);
 router.delete("/:id", deleteBlog);
 
 export default router;

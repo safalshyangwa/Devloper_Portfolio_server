@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.use(cors({
-  origin: "http://localhost:3000",
-  methods: ['GET','POST','DELETE','PATCH'], // Methods should be in uppercase
+  origin: ["http://localhost:3000", 'http://localhost:3002'],
+ // Methods should be in uppercase
   credentials: true
 }));
 
